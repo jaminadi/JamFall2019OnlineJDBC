@@ -29,12 +29,21 @@ public class BasicTest {
             System.out.println(resultSet.getString(1) + " " + resultSet.getString(2) + " " + resultSet.getString(3));
         }
 
-        resultSet.beforeFirst(); //to go back to the beginning of the result set because in order to execute the command below,
-        //we have to go back to the very beginning
+        resultSet.beforeFirst(); //to go back to the beginning of the result set
 
-        while (resultSet.next()) {
-            System.out.println(resultSet.getString("salary"));
-        }
+        //some technical information about database
+        DatabaseMetaData databaseMetaData = connection.getMetaData();
+        //some technical information about resultset
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
+        System.out.println("JDBC driver: " + databaseMetaData.getDriverName());
+        System.out.println("JDBC driver version: " + databaseMetaData.getDriverVersion());
+        System.out.println("Database name: " + databaseMetaData.getDatabaseProductName());
+        System.out.println("Database version: " + databaseMetaData.getDatabaseProductVersion());
+
+        // while (resultSet.next()) {
+        //   System.out.println(resultSet.getString("salary"));
+        //}
 
         resultSet.close();
         statement.close();
