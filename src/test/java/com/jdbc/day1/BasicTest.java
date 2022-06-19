@@ -42,11 +42,19 @@ public class BasicTest {
         System.out.println("Database version: " + databaseMetaData.getDatabaseProductVersion());
 
         System.out.println("Number of columns: " + resultSetMetaData.getColumnCount());
-        System.out.println("First column name: " + resultSetMetaData.getColumnLabel(1));
+        System.out.println("First column name: " + resultSetMetaData.getColumnName(1));
+        System.out.println("Data type of the 1st column: " + resultSetMetaData.getColumnTypeName(1));
 
-        // while (resultSet.next()) {
-        //   System.out.println(resultSet.getString("salary"));
-        //}
+        System.out.println("###################################");
+
+        //iterate through rows
+        while (resultSet.next()) {
+            //iterate through columns
+            for (int columnIndex = 1; columnIndex <= resultSetMetaData.getColumnCount(); columnIndex++) {
+                System.out.print(resultSet.getString(columnIndex) + " ");
+            }
+            System.out.println("");
+        }
 
         resultSet.close();
         statement.close();
