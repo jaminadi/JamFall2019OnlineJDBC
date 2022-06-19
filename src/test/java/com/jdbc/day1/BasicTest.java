@@ -41,6 +41,9 @@ public class BasicTest {
         System.out.println("Database name: " + databaseMetaData.getDatabaseProductName());
         System.out.println("Database version: " + databaseMetaData.getDatabaseProductVersion());
 
+        System.out.println("Number of columns: " + resultSetMetaData.getColumnCount());
+        System.out.println("First column name: " + resultSetMetaData.getColumnLabel(1));
+
         // while (resultSet.next()) {
         //   System.out.println(resultSet.getString("salary"));
         //}
