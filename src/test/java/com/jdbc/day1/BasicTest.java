@@ -47,11 +47,20 @@ public class BasicTest {
 
         System.out.println("###################################");
 
+        //resultset returns column names
+
+        //this loop will iterate through columns
+        for (int columnIndex = 1; columnIndex <= resultSetMetaData.getColumnCount(); columnIndex++) {
+            System.out.printf("%-15s", resultSetMetaData.getColumnName(columnIndex));
+        }
+
+        System.out.println("");
+
         //iterate through rows
         while (resultSet.next()) {
             //iterate through columns
             for (int columnIndex = 1; columnIndex <= resultSetMetaData.getColumnCount(); columnIndex++) {
-                System.out.print(resultSet.getString(columnIndex) + " ");
+                System.out.printf("%-15s", resultSet.getString(columnIndex) + " ");
             }
             System.out.println("");
         }
