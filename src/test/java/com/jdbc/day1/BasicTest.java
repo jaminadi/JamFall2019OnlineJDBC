@@ -49,9 +49,16 @@ public class BasicTest {
 
         //resultset returns column names
 
+        /*
+        The % means that what follows is an argument that will be formatted.
+        Then follows a - resulting in left alignment.
+        20 fills the string up to a length of 15 characters (adding spaces at the end).
+        Finally the s means, that you are formatting a string.
+         */
+
         //this loop will iterate through columns
         for (int columnIndex = 1; columnIndex <= resultSetMetaData.getColumnCount(); columnIndex++) {
-            System.out.printf("%-15s", resultSetMetaData.getColumnName(columnIndex));
+            System.out.printf("%-20s", resultSetMetaData.getColumnName(columnIndex));
         }
 
         System.out.println("");
@@ -60,7 +67,7 @@ public class BasicTest {
         while (resultSet.next()) {
             //iterate through columns
             for (int columnIndex = 1; columnIndex <= resultSetMetaData.getColumnCount(); columnIndex++) {
-                System.out.printf("%-15s", resultSet.getString(columnIndex) + " ");
+                System.out.printf("%-20s", resultSet.getString(columnIndex) + " ");
             }
             System.out.println("");
         }
