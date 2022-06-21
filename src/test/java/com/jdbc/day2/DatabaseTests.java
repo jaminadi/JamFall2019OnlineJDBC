@@ -3,6 +3,8 @@ package com.jdbc.day2;
 import org.junit.Test;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseTests {
 
@@ -20,6 +22,20 @@ public class DatabaseTests {
         String QUERY = "SELECT * FROM employees";
         ResultSet resultSet = statement.executeQuery(QUERY);
 
+        //we want to get data as an arraylist
+        List<Integer> employeeIDs = new ArrayList<>();
+        List<String> names = new ArrayList<>();
 
+        //while loop stops working once the condition becomes not true
+        while (resultSet.next()) {
+            employeeIDs.add(resultSet.getInt("employee_id"));
+            names.add(resultSet.getString("first_name") + " " + resultSet.getString("last_name"));
+        }
+        System.out.println(employeeIDs);
+        System.out.println(names);
+
+        resultSet.close();
+        statement.close();
+        connection.close();
     }
 }
