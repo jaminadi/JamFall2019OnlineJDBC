@@ -3,8 +3,7 @@ package com.jdbc.day2;
 import org.junit.Test;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class DatabaseTests {
 
@@ -26,13 +25,21 @@ public class DatabaseTests {
         List<Integer> employeeIDs = new ArrayList<>();
         List<String> names = new ArrayList<>();
 
+        List<Map<String, Integer>> employeeIDsMap = new ArrayList<>();
+
+
         //while loop stops working once the condition becomes not true
         while (resultSet.next()) {
+            Map<String, Integer> map = new HashMap<>(); //created a map
+            map.put("employee_id", resultSet.getInt("employee_id")); // put the value inside
+            employeeIDsMap.add(map); // added to the list
+
             employeeIDs.add(resultSet.getInt("employee_id"));
             names.add(resultSet.getString("first_name") + " " + resultSet.getString("last_name"));
         }
         System.out.println(employeeIDs);
         System.out.println(names);
+        System.out.println(employeeIDsMap);
 
         resultSet.close();
         statement.close();
