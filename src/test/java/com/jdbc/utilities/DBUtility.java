@@ -11,8 +11,8 @@ public class DBUtility {
         private final static String password = ConfigurationReader.getProperty("JDBC_password");
         public final static String url = ConfigurationReader.getProperty("JDBC_URL");
 
-        public static Connection connection;
-        public static Statement statement;
+        private static Connection connection;
+        private static Statement statement;
 
         static {
                 try {
@@ -22,6 +22,7 @@ public class DBUtility {
                 }
         }
 
+        //this method creates the result set
         public static ResultSet getResult(String sql) {
                 ResultSet result = null; //null will be replaced later on, it is just temporary value for initialization
                 try {
@@ -32,4 +33,11 @@ public class DBUtility {
                 return result;
         }
 
+        //this will close the connection at the last step
+        public static void tearDown() {
+                try {
+                        connection.close();
+                } catch (Exception e) {
+                }
+        }
 }
