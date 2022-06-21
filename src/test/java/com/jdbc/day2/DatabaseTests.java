@@ -25,7 +25,13 @@ public class DatabaseTests {
         List<Integer> employeeIDs = new ArrayList<>();
         List<String> names = new ArrayList<>();
 
-        List<Map<String, Integer>> employeeIDsMap = new ArrayList<>();
+        List<Map<String, Integer>> employeeIDsMap = new ArrayList<>(); //list of map for employee_id column
+        //here, we were trying to add employee_id as key, and id number as value
+        //but in the map, we can only store one employee_id, that is why we create a list of maps, because does not
+        // allow duplicates
+        //it is called column_name value combination
+
+        List<Map<String, String>> namesMap = new ArrayList<>();
 
 
         //while loop stops working once the condition becomes not true
@@ -35,11 +41,19 @@ public class DatabaseTests {
             employeeIDsMap.add(map); // added to the list
 
             employeeIDs.add(resultSet.getInt("employee_id"));
-            names.add(resultSet.getString("first_name") + " " + resultSet.getString("last_name"));
+
+            String fullName = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
+
+            names.add(fullName);
+            Map<String, String> name = new HashMap<>();
+            name.put("full_name", fullName);
+            namesMap.add(name);
         }
+
         System.out.println(employeeIDs);
         System.out.println(names);
         System.out.println(employeeIDsMap);
+        System.out.println(namesMap);
 
         resultSet.close();
         statement.close();
