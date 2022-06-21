@@ -1,8 +1,5 @@
 package com.jdbc.utilities;
 
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
-
-import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -10,12 +7,12 @@ import java.sql.Statement;
 
 public class DBUtility {
 
-        final static String username = ConfigurationReader.getProperty("JDBC_username"),
-                password = ConfigurationReader.getProperty("JDBC_password"),
-                url = ConfigurationReader.getProperty("JDBC_URL");
+        private final static String username = ConfigurationReader.getProperty("JDBC_username");
+        private final static String password = ConfigurationReader.getProperty("JDBC_password");
+        public final static String url = ConfigurationReader.getProperty("JDBC_URL");
 
-        static Connection connection;
-        static Statement statement;
+        public static Connection connection;
+        public static Statement statement;
 
         static {
                 try {

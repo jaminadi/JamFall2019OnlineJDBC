@@ -8,7 +8,6 @@ public class ResultSet_DataStructures {
 
     public static void main(String[] args) {
 
-        ResultSet resultSet = DBUtility.getResult("SELECT * FROM employees");
 
     }
 }

@@ -9,7 +9,6 @@ import static com.jdbc.utilities.DBUtility.url;
 public class ConfigurationReader {
 
     private static Properties configFile;
-
     static {
         try {
             FileInputStream fileInputStream = new FileInputStream("configuration.properties");
