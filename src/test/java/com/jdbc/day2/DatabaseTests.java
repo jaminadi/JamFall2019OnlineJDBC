@@ -55,6 +55,37 @@ public class DatabaseTests {
         System.out.println(employeeIDsMap);
         System.out.println(namesMap);
 
+        //get 5th employee
+        String fifthEmployee = namesMap.get(4).get("full_name");
+        System.out.println("5th employee = " + fifthEmployee);
+
+        resultSet.close();
+        statement.close();
+        connection.close();
+    }
+
+    @Test
+    public void insertTest() throws SQLException {
+
+        Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+        String QUERY_GET_LAST_EMPLOYEE_ID = "SELECT MAX(employee_id) FROM EMPLOYEES"; //returns last employee_id
+        ResultSet resultSet = statement.executeQuery(QUERY_GET_LAST_EMPLOYEE_ID); //this object contains result set data
+        //since employee_id is an integer, we use getInt("column index") method and +1 to increment
+        //basically, we need to add 1 to the last employee_id
+        int employeeId = resultSet.getInt(1) + 1;
+
+        //to check if email exists
+        String QUERY_TO_CHECK_IF_EMAIL_EXISTS = "SELECT COUNT(*) FROM employees WHERE email = 'marat@cybertek.com'";
+        //to check if email exists
+        ResultSet resultSet2 = statement.executeQuery(QUERY_TO_CHECK_IF_EMAIL_EXISTS);
+
+        boolean emailExists = resultSet2.getInt(1) > 0; //if count is positive, it will be true, meaning email exists
+
+        //we need to check all employee_ids, so that we dont duplicate id number.
+        String QUERY = "INSERT INTO employees VALUES (228, 'Marat', 'Mamedov', 'marat@cybertek.com', '666-777-7777', SYSDATE, 'IT_PROG', 70000, 0, NULL, NULL)";
+
         resultSet.close();
         statement.close();
         connection.close();
