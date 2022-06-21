@@ -1,5 +1,6 @@
 package com.jdbc.day2;
 
+import com.github.javafaker.Faker;
 import org.junit.Test;
 
 import java.sql.*;
@@ -74,17 +75,27 @@ public class DatabaseTests {
         ResultSet resultSet = statement.executeQuery(QUERY_GET_LAST_EMPLOYEE_ID); //this object contains result set data
         //since employee_id is an integer, we use getInt("column index") method and +1 to increment
         //basically, we need to add 1 to the last employee_id
+        resultSet.next(); //to jump to the first row. Initially, the pointer is outside the table
         int employeeId = resultSet.getInt(1) + 1;
 
-        //to check if email exists
-        String QUERY_TO_CHECK_IF_EMAIL_EXISTS = "SELECT COUNT(*) FROM employees WHERE email = 'marat@cybertek.com'";
-        //to check if email exists
-        ResultSet resultSet2 = statement.executeQuery(QUERY_TO_CHECK_IF_EMAIL_EXISTS);
 
-        boolean emailExists = resultSet2.getInt(1) > 0; //if count is positive, it will be true, meaning email exists
+        //to check if email exists
+        boolean emailExists = false;
+        String randomEmail = null;
 
-        //we need to check all employee_ids, so that we dont duplicate id number.
-        String QUERY = "INSERT INTO employees VALUES (228, 'Marat', 'Mamedov', 'marat@cybertek.com', '666-777-7777', SYSDATE, 'IT_PROG', 70000, 0, NULL, NULL)";
+        do {
+            Faker faker = new Faker();
+            randomEmail = faker.internet().emailAddress(); //to generate fake random email
+            // randomEmail - every iteration will have different value
+            String QUERY_TO_CHECK_IF_EMAIL_EXISTS = "SELECT COUNT(*) FROM employees WHERE email = '" + randomEmail + "'";
+            ResultSet resultSet2 = statement.executeQuery(QUERY_TO_CHECK_IF_EMAIL_EXISTS);
+            resultSet2.next();// proceed to the first row
+            emailExists = resultSet2.getInt(1) > 0; //if count is positive, it will be true, meaning email exists
+        } while (emailExists && randomEmail.length() <= 25);  //if count is positive (email exists) repeat steps again until email is unique
+
+        String QUERY = "INSERT INTO employees VALUES (" + employeeId + ", 'Marat', 'Mamedov', '" + randomEmail + "', '666-777-7777', SYSDATE, 'IT_PROG', 70000, 0, NULL, NULL)";
+        System.out.println("Query: " + QUERY);
+        ResultSet resultSet3 = statement.executeQuery(QUERY);
 
         resultSet.close();
         statement.close();
