@@ -82,9 +82,9 @@ public class DatabaseTests {
         //to check if email exists
         boolean emailExists = false;
         String randomEmail = null;
+        Faker faker = new Faker();
 
         do {
-            Faker faker = new Faker();
             randomEmail = faker.internet().emailAddress(); //to generate fake random email
             // randomEmail - every iteration will have different value
             String QUERY_TO_CHECK_IF_EMAIL_EXISTS = "SELECT COUNT(*) FROM employees WHERE email = '" + randomEmail + "'";
@@ -93,7 +93,7 @@ public class DatabaseTests {
             emailExists = resultSet2.getInt(1) > 0; //if count is positive, it will be true, meaning email exists
         } while (emailExists && randomEmail.length() <= 25);  //if count is positive (email exists) repeat steps again until email is unique
 
-        String QUERY = "INSERT INTO employees VALUES (" + employeeId + ", 'Marat', 'Mamedov', '" + randomEmail + "', '666-777-7777', SYSDATE, 'IT_PROG', 70000, 0, NULL, NULL)";
+        String QUERY = "INSERT INTO employees VALUES (" + employeeId + ", '" + faker.name().firstName() + "', '" + faker.name().lastName() + "', '" + randomEmail + "', '666-777-7777', SYSDATE, 'IT_PROG', 70000, 0, NULL, NULL)";
         System.out.println("Query: " + QUERY);
         ResultSet resultSet3 = statement.executeQuery(QUERY);
 
