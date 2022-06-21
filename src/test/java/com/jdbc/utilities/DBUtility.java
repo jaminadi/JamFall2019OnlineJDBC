@@ -1,9 +1,6 @@
 package com.jdbc.utilities;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DBUtility {
 
@@ -14,10 +11,13 @@ public class DBUtility {
         private static Connection connection;
         private static Statement statement;
 
+        public static DatabaseMetaData metaData;
+
         static {
                 try {
                         connection = DriverManager.getConnection(url, username, password);
                         statement = connection.createStatement();
+                        metaData = connection.getMetaData();
                 } catch (Exception e) {
                 }
         }
@@ -29,7 +29,6 @@ public class DBUtility {
                         result = statement.executeQuery(sql);
                 } catch (Exception e) {
                 }
-
                 return result;
         }
 
@@ -40,4 +39,13 @@ public class DBUtility {
                 } catch (Exception e) {
                 }
         }
+
+        public static void updateQuery(String sql) {
+                //INSERT, UPDATE, DELETE, ALTER, TRUNCATE, DROP
+                try {
+                        statement.executeUpdate(sql);
+                } catch (SQLException e) {
+                }
+        }
+
 }
