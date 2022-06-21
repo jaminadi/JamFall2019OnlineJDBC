@@ -35,5 +35,6 @@ public class ResultSet_Map {
 
         System.out.println(employeeInfo.get("Steven King") == 24000);
 
+
     }
 }
